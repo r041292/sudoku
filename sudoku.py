@@ -77,11 +77,47 @@ class Casilla:
 						self.verificarCuadrante(sudoku,2,2,4,4)
 						#esta en el cuarto cuadrante
 
+		if(sudokuTam == 9):
+			if(self.j<3):
+				if(self.i<3):
+					self.verificarCuadrante(sudoku,0,0,3,3)
+					#esta en el primer noveno
+				else:
+					if (self.i<6):
+						self.verificarCuadrante(sudoku,3,0,6,2)
+						#esta en el segundo noveno
+					else:
+						self.verificarCuadrante(sudoku,6,0,9,2)
+						#esta en el tercer noveno
+			else:
+				if(self.j<6):
+					if(self.i<3):
+						self.verificarCuadrante(sudoku,0,3,3,6)
+						#esta en el cuarto noveno
+					else:
+						if (self.i<6):
+							self.verificarCuadrante(sudoku,3,3,6,6)
+							#esta en el quinto noveno
+						else:
+							self.verificarCuadrante(sudoku,6,3,9,6)
+							#esta en el sexto noveno
+				else:
+					if(self.i<3):
+						self.verificarCuadrante(sudoku,0,6,3,9)
+						#esta en el septimo noveno
+					else:
+						if (self.i<6):
+							self.verificarCuadrante(sudoku,3,6,6,9)
+							#esta en el octavo noveno
+						else:
+							self.verificarCuadrante(sudoku,6,6,9,9)
+							#esta en el noveno noveno
+
 		self.calPosibilidades(sudokuTam)
 		self.numRestricciones = len(self.restricciones)
 		self.numPosibilidades = sudokuTam - len(self.restricciones)
-		#print("Las restricciones son:",self.restricciones)
-		#print("las posibilidades son:", self.posibilidades)
+		print("Las restricciones son:",self.restricciones)
+		print("las posibilidades son:", self.posibilidades)
 
 
 
@@ -90,8 +126,8 @@ fileName = raw_input('Digite la direccion o nombre del archivo:  ')
 file = open(fileName,'r')
 fileContent = file.read()
 
-sudokuTam=4
 lineaTemporal = fileContent.split("\n")
+sudokuTam= len(lineaTemporal)
 sudoku = []
 sudokuHistorico = []
 casillas = []
@@ -109,7 +145,7 @@ for i in range(0,sudokuTam):
 			casillas.append(Casilla(i,j))
 
 for i in range(0,len(casillas)):
-	#print('casilla: ',casillas[i].i,casillas[i].j)
+	print('casilla: ',casillas[i].i,casillas[i].j)
 	casillas[i].calRestricciones(sudoku,sudokuTam)
 
 
