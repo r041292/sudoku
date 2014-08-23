@@ -116,8 +116,20 @@ class Casilla:
 		self.calPosibilidades(sudokuTam)
 		self.numRestricciones = len(self.restricciones)
 		self.numPosibilidades = sudokuTam - len(self.restricciones)
-		print("Las restricciones son:",self.restricciones)
-		print("las posibilidades son:", self.posibilidades)
+		#print("Las restricciones son:",self.restricciones)
+		#print("las posibilidades son:", self.posibilidades)
+
+
+def restRelativas(casillas):
+	sumRestricciones=0
+	for i in range(0,len(casillas)):
+		sumRestricciones+=casillas[i].numRestricciones
+
+	try:
+		return sumRestricciones/len(casillas)
+	except ValueError:
+		return 999
+
 
 
 
@@ -134,6 +146,36 @@ casillas = []
 #sudokuHistorico.append()
 #sudokuHistorico.pop()
 
+###################
+
+
+#regresa el indiciador del vector posibilidades que genera mas restricciones
+def mejorPosibilidad(sudoku,casilla):
+	max=-1
+	indicador=-1
+	print(casilla.i,casilla.j)
+	for x in range(0,casilla.numPosibilidades):
+		sudokutemp=sudoku
+		valorPosible =casilla.posibilidades[x]
+		sudokutemp[casilla.i][casilla.j]=valorPosible
+		casillasTemporal = []
+		for i in range(0,sudokuTam):
+			for j in range(0,sudokuTam):
+				if sudokutemp[i][j] == "0" :
+					casillasTemporal.append(Casilla(i,j))
+
+		for i in range(0,len(casillasTemporal)):
+			#print('casilla: ',casillas[i].i,casillas[i].j)
+			casillasTemporal[i].calRestricciones(sudoku,sudokuTam)
+		if(restRelativas(casillasTemporal)>max):
+			indicador=x
+			max=restRelativas(casillasTemporal)
+
+	return indicador
+
+
+######################
+
 for i in range(0,sudokuTam):
 	sudoku.append(lineaTemporal[i].split(","))
 
@@ -145,10 +187,40 @@ for i in range(0,sudokuTam):
 			casillas.append(Casilla(i,j))
 
 for i in range(0,len(casillas)):
-	print('casilla: ',casillas[i].i,casillas[i].j)
+	#print('casilla: ',casillas[i].i,casillas[i].j)
 	casillas[i].calRestricciones(sudoku,sudokuTam)
 
 
+while(restRelativas(casillas)!=-999):
+	print(sudoku)
+	restRelativas1=restRelativas(casillas)
+	min=999
+	indicador=-1
+	for i  in range(0,len(casillas)):
+		if(casillas[i].numPosibilidades<min):
+			min=casillas[i].numPosibilidades
+			indicador=i
+
+	sudokuHistorico.append(sudoku)
+	casillaTemporal = casillas[indicador]
+	mejorInidicador = mejorPosibilidad(sudoku,casillaTemporal)
+	sudoku[casillaTemporal.i][casillaTemporal.j]=casillaTemporal.posibilidades[mejorInidicador]
+
+	casillas=[]
+	for i in range(0,sudokuTam):
+		for j in range(0,sudokuTam):
+			if sudoku[i][j] == "0" :
+				casillas.append(Casilla(i,j))
+
+	for i in range(0,len(casillas)):
+		#print('casilla: ',casillas[i].i,casillas[i].j)
+		casillas[i].calRestricciones(sudoku,sudokuTam)
+
+	print(len(casillas))
+	if(restRelativas(casillas)<=restRelativas1):
+		sudokuHistorico.append(sudoku)
+	else:
+		sudoku= sudokuHistorico.pop
 
 
 
