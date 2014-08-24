@@ -1,7 +1,7 @@
 #sudoku
 ======
 
-_sudoku_ is a software product of an artificial inteligence class. It has the following charasterictics:
+_sudoku_ is a sudoku solver product of an artificial inteligence class. It has the following charasterictics:
 
 1.Coded in Python
 
