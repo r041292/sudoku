@@ -224,4 +224,5 @@ while(restRelativas(casillas)!=999):
 		sudoku= sudokuHistorico.pop()
 
 
-
+for i in range (0,sudokuTam):
+        print sudoku[i]
