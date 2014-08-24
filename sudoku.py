@@ -158,7 +158,7 @@ casillas = []
 def mejorPosibilidad(sudoku,casilla):
 	max=-1
 	indicador=-1
-	print(casilla.i,casilla.j)
+	#print(casilla.i,casilla.j)
 	for x in range(0,casilla.numPosibilidades):
 		sudokutemp=sudoku
 		valorPosible =casilla.posibilidades[x]
@@ -176,7 +176,7 @@ def mejorPosibilidad(sudoku,casilla):
 			indicador=x
 			max=restRelativas(casillasTemporal)
 
-	print indicador
+	#print indicador
 	return indicador
 
 
@@ -196,32 +196,35 @@ for i in range(0,len(casillas)):
 	#print('casilla: ',casillas[i].i,casillas[i].j)
 	casillas[i].calRestricciones(sudoku,sudokuTam)
 
-
+iteracion = 0
 while(restRelativas(casillas)!=999):
-	print("sudoku inicial")
+	iteracion+=1
+	print("Iteracion Numero:",iteracion)
+	print("sudoku")
 	for i in range (0,sudokuTam):
 		print sudoku[i]
 
 	restRelativas1=restRelativas(casillas)
-	print(restRelativas1)
+	#print(restRelativas1)
 	min=999
 	indicador=-1
 	for i  in range(0,len(casillas)):
 		if(casillas[i].numPosibilidades<min):
 			min=casillas[i].numPosibilidades
 			indicador=i
-	print("largo historico",len(sudokuHistorico))
+			#print("largo historico",len(sudokuHistorico))
 	casillaTemporal = casillas[indicador]
 	if(casillaTemporal.numPosibilidades>0):
 		sudokuHistorico.append(copy.deepcopy(sudoku))
 		mejorInidicador = mejorPosibilidad(sudoku,casillaTemporal)
 		sudoku[casillaTemporal.i][casillaTemporal.j]=casillaTemporal.posibilidades[mejorInidicador]
 		casillas[indicador].val=casillaTemporal.posibilidades[mejorInidicador]
-		print("casilla modificada",casillaTemporal.i,casillaTemporal.j)
+		print("casilla modificada: ",casillaTemporal.i,casillaTemporal.j," valor agregado: ",casillas[indicador].val)
+		print("restricciones de la casilla", casillaTemporal.restricciones)
 		casillas[indicador].posibilidades.remove(casillas[indicador].val)
 		casillas[indicador].numPosibilidades-=1
 		casillasHistorico.append(copy.deepcopy(casillas))
-		print("largo historico",len(sudokuHistorico))
+		#print("largo historico",len(sudokuHistorico))
 
 		casillas=[]
 		for i in range(0,sudokuTam):
@@ -236,13 +239,11 @@ while(restRelativas(casillas)!=999):
 		#print(len(casillas))
 		#print(restRelativas(casillas))
 	else:
-		print("back tracking ----- ")
+		#print("back tracking ----- ")
 		sudoku= sudokuHistorico.pop()
-		print("sudoku regresado")
-		for i in range (0,sudokuTam):
-			print sudoku[i]
 		casillas=casillasHistorico.pop()
 
 
+print("Resultado: ")
 for i in range (0,sudokuTam):
         print sudoku[i]
