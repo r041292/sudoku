@@ -1,14 +1,14 @@
 #sudoku
 ======
-_Sudoku_ is a software product of an artificial inteligence class.
 
-It has the following charasterictics:
+_sudoku_ is a software product of an artificial inteligence class. It has the following charasterictics:
 
-⋅⋅*Coded in Python
-⋅⋅*Has a BT-FC-DO (Backtracking,forward checking, dynamic ordering) approach
-⋅⋅*Reads soduku from external files
-⋅⋅*Inputs and variable names  in Spanish
+1.Coded in Python
 
-####Code is not fully documented.
+2.Uses a BT-FC-DO (Backtracking,forward checking, dynamic ordering) approach
 
-_VITTORINOR & APGALLON_
+3.Reads soduku from external files
+
+4.Inputs and variable names are in Spanish
+
+#####/Code is not fully documented/
