@@ -126,8 +126,8 @@ def restRelativas(casillas):
 		sumRestricciones+=casillas[i].numRestricciones
 
 	try:
-		return sumRestricciones/len(casillas)
-	except ValueError:
+		return (sumRestricciones*1.0)/len(casillas)
+	except ZeroDivisionError:
 		return 999
 
 
@@ -191,7 +191,7 @@ for i in range(0,len(casillas)):
 	casillas[i].calRestricciones(sudoku,sudokuTam)
 
 
-while(restRelativas(casillas)!=-999):
+while(restRelativas(casillas)!=999):
 	print(sudoku)
 	restRelativas1=restRelativas(casillas)
 	min=999
@@ -217,10 +217,11 @@ while(restRelativas(casillas)!=-999):
 		casillas[i].calRestricciones(sudoku,sudokuTam)
 
 	print(len(casillas))
-	if(restRelativas(casillas)<=restRelativas1):
+	print(restRelativas(casillas))
+	if(restRelativas(casillas)<restRelativas1):
 		sudokuHistorico.append(sudoku)
 	else:
-		sudoku= sudokuHistorico.pop
+		sudoku= sudokuHistorico.pop()
 
 
 
