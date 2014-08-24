@@ -2,6 +2,7 @@
 class Casilla:
 	i = -99
 	j = -99
+	val= 0
 	restricciones = []
 	posibilidades = []
 	numRestricciones = -99
@@ -10,6 +11,7 @@ class Casilla:
 	def __init__(self,i,j):
 		self.i=i
 		self.j=j
+		self.val=0
 		self.restricciones = []
 		self.posibilidades = []
 		self.numRestricciones = -99
@@ -142,6 +144,7 @@ lineaTemporal = fileContent.split("\n")
 sudokuTam= len(lineaTemporal)
 sudoku = []
 sudokuHistorico = []
+casillasHistorico = []
 casillas = []
 #sudokuHistorico.append()
 #sudokuHistorico.pop()
@@ -205,7 +208,8 @@ while(restRelativas(casillas)!=999):
 	casillaTemporal = casillas[indicador]
 	mejorInidicador = mejorPosibilidad(sudoku,casillaTemporal)
 	sudoku[casillaTemporal.i][casillaTemporal.j]=casillaTemporal.posibilidades[mejorInidicador]
-
+	casillaTemporal.val=casillaTemporal.posibilidades[mejorInidicador]
+	
 	casillas=[]
 	for i in range(0,sudokuTam):
 		for j in range(0,sudokuTam):
@@ -220,8 +224,11 @@ while(restRelativas(casillas)!=999):
 	print(restRelativas(casillas))
 	if(restRelativas(casillas)<restRelativas1):
 		sudokuHistorico.append(sudoku)
+		casillasHistorico.append(casillas)
+		casillaTemporal.posibilidades.remove(casillaTemporal.val)
 	else:
 		sudoku= sudokuHistorico.pop()
+		casillas=casillasHistorico.pop()
 
 
 for i in range (0,sudokuTam):
