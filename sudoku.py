@@ -148,6 +148,9 @@ sudoku = []
 sudokuHistorico = []
 casillasHistorico = []
 casillas = []
+
+fileName = "result.txt"
+file= open(fileName,'w')
 #sudokuHistorico.append()
 #sudokuHistorico.pop()
 
@@ -200,6 +203,7 @@ iteracion = 0
 while(restRelativas(casillas)!=999):
 	iteracion+=1
 	print("Iteracion Numero:",iteracion)
+	file.write("Iteracion Numero:"+str(iteracion)+"\n")
 	print("sudoku")
 	for i in range (0,sudokuTam):
 		print sudoku[i]
@@ -221,6 +225,8 @@ while(restRelativas(casillas)!=999):
 		casillas[indicador].val=casillaTemporal.posibilidades[mejorInidicador]
 		print("casilla modificada: ",casillaTemporal.i,casillaTemporal.j," valor agregado: ",casillas[indicador].val)
 		print("restricciones de la casilla", casillaTemporal.restricciones)
+		file.write("casilla modificada: "+str(casillaTemporal.i)+","+str(casillaTemporal.j)+" valor agregado: "+str(casillas[indicador].val)+"\n")
+		file.write("restricciones de la casilla"+ str(casillaTemporal.restricciones)+"\n")
 		casillas[indicador].posibilidades.remove(casillas[indicador].val)
 		casillas[indicador].numPosibilidades-=1
 		casillasHistorico.append(copy.deepcopy(casillas))
@@ -240,6 +246,7 @@ while(restRelativas(casillas)!=999):
 		#print(restRelativas(casillas))
 	else:
 		#print("back tracking ----- ")
+		file.write("\n---BACKTRACKING---\n")
 		sudoku= sudokuHistorico.pop()
 		casillas=casillasHistorico.pop()
 
